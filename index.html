@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contador de Namoro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+      background-image: url('fundo.jpg'); /* <-- Altere esse nome para o da sua imagem */
+      background-size: cover;
+      background-position: 20% center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #ffccdd;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    #resultado {
+      margin-top: 30px;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      font-size: 20px;
+      font-style: italic;
+      color: #ffd1e1;
+      text-shadow: 1px 1px 3px #000;
+      opacity: 0;
+      animation: fadeIn 2s forwards, brilho 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes brilho {
+      0% {
+        text-shadow:
+          0 0 5px #ff99cc,
+          0 0 10px #ff66aa,
+          0 0 20px #ff3399,
+          0 0 30px #ff0077;
+      }
+      100% {
+        text-shadow:
+          0 0 10px #ff99cc,
+          0 0 20px #ff66aa,
+          0 0 30px #ff3399,
+          0 0 40px #ff0077;
+      }
+    }
+
+    #btnMusica {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ffccdd;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💘 Contador de Namoro 💘</h1>
+  <p style="font-size: 18px; text-shadow: 1px 1px 3px #000;">
+    Namorando desde: <strong>21 de fevereiro de 2019</strong>
+  </p>
+
+  <div id="resultado"></div>
+  <div id="mensagem">Obrigado por mais uma data comemorativa, o Dia dos Namorados! 💖</div>
+
+  <button id="btnMusica">💖 Tocar nossa música</button>
+
+  <audio id="musica" src="musica.mp3" loop></audio>
+
+  <script>
+    function calcularTempoNamoro() {
+      const inicio = new Date(2019, 1, 21); // fevereiro = 1
+      const hoje = new Date();
+
+      const msPorDia = 1000 * 60 * 60 * 24;
+      const diasNamoro = Math.floor((hoje - inicio) / msPorDia);
+
+      let anos = hoje.getFullYear() - inicio.getFullYear();
+      let meses = hoje.getMonth() - inicio.getMonth();
+      let dias = hoje.getDate() - inicio.getDate();
+
+      if (dias < 0) {
+        meses--;
+        const ultimoMes = new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
+        dias += ultimoMes;
+      }
+
+      if (meses < 0) {
+        anos--;
+        meses += 12;
+      }
+
+      document.getElementById("resultado").innerHTML = `
+        Vocês estão juntos há:<br>
+        ❤️ <strong>${anos} anos, ${meses} meses e ${dias} dias</strong><br>
+        💕 Isso dá um total de <strong>${diasNamoro} dias de amor!</strong>
+      `;
+    }
+
+    calcularTempoNamoro();
+
+    document.getElementById("btnMusica").addEventListener("click", function () {
+      const musica = document.getElementById("musica");
+      musica.play();
+      this.style.display = "none"; // esconde botão após tocar
+    });
+  </script>
+
+</body>
+</html>
